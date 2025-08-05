@@ -1,0 +1,13 @@
+--- a/kernel/common/inc/nv-memdbg.h	2025-07-22 10:10:05.779458594 +0300
++++ b/kernel/common/inc/nv-memdbg.h	2025-07-22 10:10:14.207256127 +0300
+@@ -28,8 +28,8 @@
+ 
+ #else
+ 
+-#define NV_MEMDBG_ADD(ptr, size)
+-#define NV_MEMDBG_REMOVE(ptr, size)
++#define NV_MEMDBG_ADD(ptr, size) {}
++#define NV_MEMDBG_REMOVE(ptr, size) {}
+ 
+ #endif /* NV_MEM_LOGGER */
+ 
