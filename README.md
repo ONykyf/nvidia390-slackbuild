@@ -20,7 +20,7 @@ This is a slightly changed version from slackbuilds.org, so credits go to Heinz 
 
 - `nvidia.ko`, `nvidia-drm.ko`, `nvidia-uvm.ko`, and `nvidia-modeset.ko` should be in initrd to be inserted at early boot
 
-- You should either have XLibre with `IgnoreABI` support in `OutputClass`, or (in paricular, for X.Org) put this option in `ServerFlags`
+- You should either have XLibre with `IgnoreABI` support in `OutputClass`, or (in particular, for X.Org) put this option in `ServerFlags`
 
 - parameters `nvidia-drm.modeset=1`, `fbdev=1`, and `nouveau.blackist=1` were passed to kernel through GRUB (although I am only sure about the first one that it is necessary and works)
 
