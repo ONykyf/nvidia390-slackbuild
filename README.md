@@ -12,7 +12,7 @@ This is a slightly changed version from slackbuilds.org, so credits go to Heinz 
 
 - Logs are written to the respective directories and packages built are put there
 
-#Prerequisites:
+# Prerequisites:
 
 - `TimerForce()`, which was unexported in XLibre, should be reexported (apply the patch to xlibre-server)
 
@@ -24,7 +24,7 @@ This is a slightly changed version from slackbuilds.org, so credits go to Heinz 
 
 - parameters `nvidia-drm.modeset=1`, `fbdev=1`, and `nouveau.blackist=1` were passed to kernel through GRUB (although I am only sure about the first one that it is necessary and works)
 
-#Status and caveats
+# Status and caveats
 
 There is a warning about "tainted kernel" in `dmesg` output.
 
