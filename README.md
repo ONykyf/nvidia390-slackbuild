@@ -4,7 +4,7 @@ Slackbuilds for kernel modules, X driver, and nvidia utilities
 
 This is a slightly changed version from slackbuilds.org, so credits go to Heinz Wiesinger and Edward W. Koenig, who are the authors of the original scripts.
 
-#Changes:
+# Changes:
 
 - Adapted to build for XLibre, although should also work for X.Org, if the default `--x-module-path` is changed back from `/usr/lib??/xorg/modules/xlibre-25.0` back to `/usr/lib??/xorg/modules/`
 
