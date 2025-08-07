@@ -61,7 +61,7 @@ After X session is started, the nvidia390 driver works nice, much better that no
 [2025-08-07 10:03:30] (EE) NVIDIA(0):     you continue to encounter problems, Please try
 [2025-08-07 10:03:30] (EE) NVIDIA(0):     reinstalling the NVIDIA driver.
 ```
-probably because of the presence of an integrated card. If the stock `libglx.so` from xserver is used, X starts, even glxgears work if the integrated intel card is initialises, but glxinfo on nvidia shows only intel.
+probably because of the presence of an integrated card. If the stock `libglx.so` from xserver is used, X starts, even glxgears work if the integrated intel card is initialised, but glxinfo on nvidia shows only intel.
 ```
 [2025-08-07 10:03:29] (II) xfree86: Adding drm device (/dev/dri/card0)
 [2025-08-07 10:03:29] (II) Platform probe for /sys/devices/pci0000:00/0000:00:01.0/0000:01:00.0/drm/card0
