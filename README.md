@@ -16,7 +16,7 @@ This is a slightly changed version from slackbuilds.org, so credits go to Heinz 
 
 - `TimerForce()`, which was unexported in XLibre, should be reexported (apply the patch to xlibre-server)
 
-- `nouveau` kernel driver should be blacklisted (add /etc/modprobe.d/BLACKLIST-nouveau.conf to your system)
+- `nouveau` kernel driver should be blacklisted (add `/etc/modprobe.d/BLACKLIST-nouveau.conf` to your system)
 
 - `nvidia.ko`, `nvidia-drm.ko`, `nvidia-uvm.ko`, and `nvidia-modeset.ko` should be in initrd to be inserted at early boot
 
