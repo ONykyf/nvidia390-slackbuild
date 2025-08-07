@@ -30,6 +30,7 @@ VERSION=${VERSION:-390.157}
 BUILD=${BUILD:-10}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
+XLIBRE_ABI=${XLIBRE_ABI:-25.0}
 
 set -e
 
@@ -95,7 +96,7 @@ SRCNAM=NVIDIA-Linux-$TARGET-${VERSION}
 rm -rf $PKG
 rm -rf $TMP/$SRCNAM
 mkdir -p $TMP $PKG $OUTPUT $PKG/install
-mkdir -p $PKG/usr/lib$LIBDIRSUFFIX/xorg/modules/{drivers,extensions} \
+mkdir -p $PKG/usr/lib$LIBDIRSUFFIX/xorg/modules/xlibre-${XLIBRE_ABI}/{drivers,extensions} \
   $PKG/etc/OpenCL/vendors/ $PKG/usr/{bin,doc,man/man1} \
   $PKG/usr/share/{applications,nvidia,pixmaps,egl/egl_external_platform.d} \
   $PKG/etc/X11/glvnd/egl_vendor.d $PKG/var/log
@@ -103,6 +104,8 @@ mkdir -p $PKG/usr/lib$LIBDIRSUFFIX/xorg/modules/{drivers,extensions} \
 if [ "$COMPAT32" = "yes" ]; then
   mkdir -p $PKG/usr/lib/tls
 fi
+
+(
 
 # Extract all the sources
 cd $TMP
@@ -180,7 +183,7 @@ cd $TMP/$SRCNAM
   -z -n -b --no-rpms --no-distro-scripts \
   --no-kernel-module-source --no-x-check --force-libglx-indirect \
   --x-prefix=$PKG/usr \
-  --x-module-path=$PKG/usr/lib${LIBDIRSUFFIX}/xorg/modules \
+  --x-module-path=$PKG/usr/lib${LIBDIRSUFFIX}/xorg/modules/xlibre-${XLIBRE_ABI} \
   --x-library-path=$PKG/usr/lib${LIBDIRSUFFIX} \
   --x-sysconfig-path=$PKG/etc/X11/xorg.conf.d \
   --opengl-prefix=$PKG/usr \
@@ -310,11 +313,11 @@ if [ "$ARCH" = "x86_64" -a "${COMPAT32}" = "yes" ]; then
 fi
 
 # Make sure the X is specified to automagically load the
-# correct driver, since I always forget. You can remove
+# correct driver and to ignore its ABI version. You can remove
 # this file if you have an equivalent entry in /etc/X11/xorg.d
 
 mkdir -p $PKG/usr/share/X11/xorg.conf.d/
-cat $TMP/$SRCNAM/nvidia-drm-outputclass.conf > $PKG/usr/share/X11/xorg.conf.d/10-nvidia.conf
+cat $CWD/nvidia-drm-outputclass.conf > $PKG/usr/share/X11/xorg.conf.d/10-nvidia.conf
 
 
 cd $TMP/$SRCNAM
@@ -374,3 +377,5 @@ rm -f $PKG/usr/bin/nvidia-{installer,uninstall}
 # Flag multlib as needed and build package.
 cd $PKG
 /sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION$MULTI-$ARCH-$BUILD$TAG.$PKGTYPE
+mv $OUTPUT/$PRGNAM-$VERSION$MULTI-$ARCH-$BUILD$TAG.$PKGTYPE $CWD/
+)  2>&1 | tee $CWD/$PRGNAM-$VERSION$MULTI-$ARCH-$BUILD$TAG.log
