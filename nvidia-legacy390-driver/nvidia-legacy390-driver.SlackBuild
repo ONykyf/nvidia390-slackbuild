@@ -283,19 +283,6 @@ cd -
     install -m 644 _out/Linux_$TARGET/nvidia-modprobe.1.gz $PKG/usr/man/man1/
   cd -
 
-# Bash script to cleanly install (in doinst.sh) and uninstall the nvidia files
-# so we don't stomp on the overlapping xorg files.
-# Note: switching can be problematic ;-)
-mkdir -p $PKG/usr/sbin
-install -m 0755 $CWD/nvidia-switch $PKG/usr/sbin/
-sed -i s/PKGVERSION/$VERSION/g $PKG/usr/sbin/nvidia-switch
-sed -i s/LIBDIRSUFFIX/$LIBDIRSUFFIX/g $PKG/usr/sbin/nvidia-switch
-if [ ${COMPAT32} = "yes" ]; then
-  sed -i s/LIB32FLAG/yes/g $PKG/usr/sbin/nvidia-switch
-else
-  sed -i s/LIB32FLAG/no/g $PKG/usr/sbin/nvidia-switch
-fi
-
 # These add or correct wrong paths
 sed -i "s|__UTILS_PATH__|/usr/bin|" $PKG/usr/share/applications/nvidia-settings.desktop
 sed -i "s|__PIXMAP_PATH__|/usr/share/pixmaps|" $PKG/usr/share/applications/nvidia-settings.desktop
@@ -351,9 +338,6 @@ fi
 
 cat $CWD/doinst.sh > $PKG/install/doinst.sh
 
-# Add new douninst.sh script:
-sed "s/SUFFIX/$LIBDIRSUFFIX/g" $CWD/douninst.sh > $PKG/install/douninst.sh
-
 # Add rc.nvidia-persistenced:
 if [ "${PERSISTENCED:-no}" = "yes" ]; then
   cd $TMP
@@ -385,7 +369,7 @@ fi
 # work on an installed driver:
 rm -f $PKG/usr/bin/nvidia-{installer,uninstall}
 
-# Flag multlib as needed and build package.
+# Flag multilib as needed and build package.
 cd $PKG
 /sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION$MULTI-$ARCH-$BUILD$TAG.$PKGTYPE
 mv $OUTPUT/$PRGNAM-$VERSION$MULTI-$ARCH-$BUILD$TAG.$PKGTYPE $CWD/
