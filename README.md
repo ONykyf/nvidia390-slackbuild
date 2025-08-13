@@ -14,15 +14,13 @@ This is a slightly changed version from slackbuilds.org, so credits go to Heinz 
 
 # Prerequisites:
 
-- `TimerForce()`, which was unexported in XLibre, should be reexported (apply the patch to xlibre-server)
+- You should either have XLibre with `IgnoreABI` and `Module` support in `OutputClass` and `TimerForce()` function reexported (get it at https://github.com/ONykyf/X11Libre-SlackBuild until these changes are not merged into a stable version), or (in particular, for X.Org) put `IgnoreABI` option in `ServerFlags` (read `10-nvidia.conf for details`)
 
 - `nouveau` kernel driver should be blacklisted (add `/etc/modprobe.d/BLACKLIST-nouveau.conf` to your system)
 
 - `nvidia.ko`, `nvidia-drm.ko`, `nvidia-uvm.ko`, and `nvidia-modeset.ko` should be in initrd to be inserted at early boot
 
-- You should either have XLibre with `IgnoreABI` support in `OutputClass`, or (in particular, for X.Org) put this option in `ServerFlags`
-
-- parameters `nvidia-drm.modeset=1`, `fbdev=1`, and `nouveau.blackist=1` were passed to kernel through GRUB (although I am only sure about the first one that it is necessary and works)
+- parameters `nvidia-drm.modeset=1` and `nouveau.blackist=1` were passed to kernel through GRUB (although I am only sure about the first one that it is necessary and works)
 
 # Status and caveats
 
@@ -47,32 +45,6 @@ Maybe the pause is long because something goes wrong with networking. When Xserv
 [   83.284368] CIFS: SMB3.11 POSIX Extensions are experimental
 ```
 
-After X session is started, the nvidia390 driver works nice, much better that nouveau (no lags, picture and fonts are clearer), although `libglx.so.390.157` from NVidia fails to load, and X screen is black:
-```
-[2025-08-07 10:03:30] (==) NVIDIA(0): Depth 24, (==) framebuffer bpp 32
-[2025-08-07 10:03:30] (==) NVIDIA(0): RGB weight 888
-[2025-08-07 10:03:30] (==) NVIDIA(0): Default visual is TrueColor
-[2025-08-07 10:03:30] (==) NVIDIA(0): Using gamma correction (1.00, 1.00, 1.00)
-[2025-08-07 10:03:30] (II) Applying OutputClass "NVidia" options to /dev/dri/card0
-[2025-08-07 10:03:30] (**) NVIDIA(0): Enabling 2D acceleration
-[2025-08-07 10:03:30] (EE) NVIDIA(0): Failed to initialize the GLX module; please check in your X
-[2025-08-07 10:03:30] (EE) NVIDIA(0):     log file that the GLX module has been loaded in your X
-[2025-08-07 10:03:30] (EE) NVIDIA(0):     server, and that the module is the NVIDIA GLX module.  If
-[2025-08-07 10:03:30] (EE) NVIDIA(0):     you continue to encounter problems, Please try
-[2025-08-07 10:03:30] (EE) NVIDIA(0):     reinstalling the NVIDIA driver.
-```
-probably because of the presence of an integrated card. If the stock `libglx.so` from xserver is used, X starts, even glxgears work if the integrated intel card is initialised, but glxinfo on nvidia shows only intel.
-```
-[2025-08-07 10:03:29] (II) xfree86: Adding drm device (/dev/dri/card0)
-[2025-08-07 10:03:29] (II) Platform probe for /sys/devices/pci0000:00/0000:00:01.0/0000:01:00.0/drm/card0
-[2025-08-07 10:03:29] (II) xfree86: Adding drm device (/dev/dri/card1)
-[2025-08-07 10:03:29] (II) Platform probe for /sys/devices/pci0000:00/0000:00:02.0/drm/card1
-[2025-08-07 10:03:29] (**) OutputClass "NVidia" sets nvidia to ignore ABI for "/dev/dri/card0" managed by nvidia-drm
-[2025-08-07 10:03:29] (--) PCI:*(1@0:0:0) 10de:1201:1043:83b5 rev 161, Mem @ 0xf4000000/33554432, 0xe0000000/134217728, 0xe8000000/67108864, I/O @ 0xe000/128, BIOS @ 0x????????/131072
-[2025-08-07 10:03:29] (II) Open ACPI successful (/var/run/acpid.socket)
-[2025-08-07 10:03:29] (II) LoadModule: "glx"
-[2025-08-07 10:03:29] (II) Loading /usr/lib64/xorg/modules/xlibre-25.0/extensions/libglx.so
-[2025-08-07 10:03:29] (II) Module glx: vendor="X.Org Foundation"
-```
-
-This issue likely would not arise if two cards were not present and active.
+After X session is started, the nvidia390 driver works nice, much better that nouveau (no lags, picture and fonts are clearer). Note that if You have an integrated card and want it to work in parallel at a separate seat (as i have `intel`),
+then the second instance for it should be run with `-modulepath /usr/lib64/xorg/modules` command-line option to prevent loading an nVidia GLX library instead of the XOrg stock version. This way You obtain different GLX
+realizations working at different seats.

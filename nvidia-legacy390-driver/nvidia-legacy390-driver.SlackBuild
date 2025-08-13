@@ -96,7 +96,7 @@ SRCNAM=NVIDIA-Linux-$TARGET-${VERSION}
 rm -rf $PKG
 rm -rf $TMP/$SRCNAM
 mkdir -p $TMP $PKG $OUTPUT $PKG/install
-mkdir -p $PKG/usr/lib$LIBDIRSUFFIX/xorg/modules/xlibre-${XLIBRE_ABI}/{drivers,extensions} \
+mkdir -p $PKG/usr/lib$LIBDIRSUFFIX/nvidia/xorg \
   $PKG/etc/OpenCL/vendors/ $PKG/usr/{bin,doc,man/man1} \
   $PKG/usr/share/{applications,nvidia,pixmaps,egl/egl_external_platform.d} \
   $PKG/etc/X11/glvnd/egl_vendor.d $PKG/var/log
@@ -183,7 +183,7 @@ cd $TMP/$SRCNAM
   -z -n -b --no-rpms --no-distro-scripts \
   --no-kernel-module-source --no-x-check --force-libglx-indirect \
   --x-prefix=$PKG/usr \
-  --x-module-path=$PKG/usr/lib${LIBDIRSUFFIX}/xorg/modules/xlibre-${XLIBRE_ABI} \
+  --x-module-path=$PKG/usr/lib${LIBDIRSUFFIX}/nvidia/xorg/ \
   --x-library-path=$PKG/usr/lib${LIBDIRSUFFIX} \
   --x-sysconfig-path=$PKG/etc/X11/xorg.conf.d \
   --opengl-prefix=$PKG/usr \
@@ -202,6 +202,17 @@ cd $TMP/$SRCNAM
 # no longer needed (caused the "failed to remove some directories"
 # warning message):
 rm -rf $PKG/var/lib
+
+# Replace a library that stopped working
+if [ -d $PKG/usr/lib${LIBDIRSUFFIX} ] ; then
+    cp -f $PKG/usr/lib${LIBDIRSUFFIX}/tls/libnvidia-tls.so.$VERSION $PKG/usr/lib${LIBDIRSUFFIX}/
+#    rm -rf $PKG/usr/lib${LIBDIRSUFFIX}/tls
+fi
+
+if [ "$COMPAT32" = "yes" ]; then
+    cp -f $PKG/usr/lib/tls/libnvidia-tls.so.$VERSION $PKG/usr/lib/
+#    rm -rf $PKG/usr/lib/tls
+fi
 
 # if not multilib, remove the unneeded /usr/lib folder:
 if [ "$ARCH" = "x86_64" -a "${COMPAT32}" != "yes" ]; then
@@ -296,10 +307,10 @@ sed -i '/Encoding/d' $PKG/usr/share/applications/nvidia-settings.desktop
 cd $PKG/usr/lib$LIBDIRSUFFIX
   rm -f libGL.la
   rm -f libOpenCL.so*
-  rm -f xorg/modules/libwfb.so
-  if [ -e xorg/modules/extensions/libglx.so ]; then
-    rm -f xorg/modules/extensions/libglx.so
-  fi
+#  rm -f xorg/modules/libwfb.so
+#  if [ -e xorg/modules/extensions/libglx.so ]; then
+#    rm -f xorg/modules/extensions/libglx.so
+#  fi
 cd -
 
 if [ "$ARCH" = "x86_64" -a "${COMPAT32}" = "yes" ]; then
@@ -317,7 +328,7 @@ fi
 # this file if you have an equivalent entry in /etc/X11/xorg.d
 
 mkdir -p $PKG/usr/share/X11/xorg.conf.d/
-cat $CWD/nvidia-drm-outputclass.conf > $PKG/usr/share/X11/xorg.conf.d/10-nvidia.conf
+cat $CWD/nvidia-drm-outputclass.conf | sed "s|LIBDIRSUFFIX|$LIBDIRSUFFIX|"> $PKG/usr/share/X11/xorg.conf.d/10-nvidia.conf
 
 
 cd $TMP/$SRCNAM
