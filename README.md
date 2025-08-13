@@ -2,7 +2,7 @@
 
 Slackbuilds for kernel modules, X driver, and nvidia utilities
 
-This is a slightly changed version from slackbuilds.org, so credits go to Heinz Wiesinger and Edward W. Koenig, who are the authors of the original scripts.
+This is a slightly changed version from slackbuilds.org, so credits go to Heinz Wiesinger, Edward W. Koenig, and Lenard Spencer, who are the authors of the original scripts.
 
 # Changes:
 
