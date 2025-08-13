@@ -14,7 +14,7 @@ This is a slightly changed version from slackbuilds.org, so credits go to Heinz 
 
 # Prerequisites:
 
-- You should either have XLibre with `IgnoreABI` and `Module` support in `OutputClass` and `TimerForce()` function reexported (get it at https://github.com/ONykyf/X11Libre-SlackBuild until these changes are not merged into a stable version), or (in particular, for X.Org) put `IgnoreABI` option in `ServerFlags` (read `10-nvidia.conf for details`)
+- You should either have XLibre with `IgnoreABI` and `Module` support in `OutputClass` and `TimerForce()` function reexported (get it at https://github.com/ONykyf/X11Libre-SlackBuild until these changes are merged into a stable version), or (in particular, for X.Org) put `IgnoreABI` option in `ServerFlags` (read `10-nvidia.conf for details`)
 
 - `nouveau` kernel driver should be blacklisted (add `/etc/modprobe.d/BLACKLIST-nouveau.conf` to your system)
 
