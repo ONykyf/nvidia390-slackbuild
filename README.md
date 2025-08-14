@@ -55,4 +55,6 @@ realizations working at different seats.
 Slackbuilds for building a newer 470 driver with kernel modules from the same authors are also added (slightly modified tom play well with XLibre).
 I can only confirm that packages are built, but have no hardware supported by them, so cannot verify that they work (although I expect no problems).
 
+NVidia installer for 470 is too large (approx. 250 Mb) to store it here, but `get_NVIDIA-Linux-x86_64-470.256.02.run.sh` will downliad it for You.
+
 Please try this, remarks and bug complaints (if any) are welcome!
