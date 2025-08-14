@@ -30,7 +30,6 @@ VERSION=${VERSION:-390.157}
 BUILD=${BUILD:-10}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
-XLIBRE_ABI=${XLIBRE_ABI:-25.0}
 
 set -e
 
@@ -115,9 +114,9 @@ rm -rf nvidia-settings-$VERSION
 tar xvf $CWD/nvidia-settings-$VERSION.tar.bz2
 rm -rf nvidia-xconfig-$VERSION
 tar xvf $CWD/nvidia-xconfig-$VERSION.tar.bz2
-rm -rf nvidia-modprobe-$VERSION.tar.bz2
+rm -rf nvidia-modprobe-$VERSION
 tar xvf $CWD/nvidia-modprobe-$VERSION.tar.bz2
-sh $CWD/$SRCNAM.run --extract-only
+sh $CWD/../$SRCNAM.run --extract-only
 cd $SRCNAM
 chown -R root:root .
 find -L . \
@@ -317,7 +316,6 @@ fi
 mkdir -p $PKG/usr/share/X11/xorg.conf.d/
 cat $CWD/nvidia-drm-outputclass.conf | sed "s|LIBDIRSUFFIX|$LIBDIRSUFFIX|"> $PKG/usr/share/X11/xorg.conf.d/10-nvidia.conf
 
-
 cd $TMP/$SRCNAM
 # put docs in the right place
 mv $PKG/usr/share/man/man1/nvidia-* $PKG/usr/man/man1
@@ -362,7 +360,6 @@ if [ "${PERSISTENCED:-no}" = "yes" ]; then
     install -m 755 $CWD/rc.nvidia-persistenced $PKG/etc/rc.d/rc.nvidia-persistenced
     sed -i "s|__USER__|nvidia|" $PKG/etc/rc.d/rc.nvidia-persistenced
     chown nvidia:nvidia $PKG/var/run/nvidia-persistenced
-  cd -
 fi
 
 # We must now remove our custom nvidia-installer as it will no longer

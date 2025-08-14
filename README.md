@@ -48,3 +48,11 @@ Maybe the pause is long because something goes wrong with networking. When Xserv
 After X session is started, the nvidia390 driver works nice, much better that nouveau (no lags, picture and fonts are clearer). Note that if You have an integrated card and want it to work in parallel at a separate seat (as i have `intel`),
 then the second X instance for it should be run with `-modulepath /usr/lib64/xorg/modules` command-line option to prevent loading an nVidia GLX library instead of the XOrg stock version. This way You obtain different GLX
 realizations working at different seats.
+
+
+# nvidia470
+
+Slackbuilds for building a newer 470 driver with kernel modules from the same authors are also added (slightly modified tom play well with XLibre).
+I can only confirm that packages are built, but have no hardware supported by them, so cannot verify that they work (although I expect no problems).
+
+Please try this, remarks and bug complaints (if any) are welcome!

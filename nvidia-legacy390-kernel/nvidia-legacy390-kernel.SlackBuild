@@ -69,7 +69,7 @@ if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
 fi
 
 TMP=${TMP:-/tmp/SBo}
-PKG=$TMP/package-$PRGNAM2
+PKG=$TMP/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
 
 rm -rf $PKG
@@ -79,7 +79,7 @@ rm -rf $SRCNAM
 
 (
 
-sh $CWD/$SRCNAM.run --extract-only || exit 1
+sh $CWD/../$SRCNAM.run --extract-only || exit 1
 cd $SRCNAM || exit 1
 chown -R root:root .
 find -L . \
