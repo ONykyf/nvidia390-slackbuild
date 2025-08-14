@@ -55,6 +55,17 @@ realizations working at different seats.
 Slackbuilds for building a newer 470 driver with kernel modules from the same authors are also added (slightly modified to play well with XLibre).
 I can only confirm that packages are built, but have no hardware supported by them, so cannot verify that they work (although I expect no problems).
 
-NVidia installer for 470 is too large (approx. 250 Mb) to store it here, but `get_NVIDIA-Linux-x86_64-470.256.02.run.sh` will downliad it for You.
+NVidia installer for 470 is too large (approx. 250 Mb) to store it here, but `get_NVIDIA-Linux-x86_64-470.256.02.run.sh` will download it for You.
+
+You have to run the kernel package build script as
+```
+KERNEL614=yes nvidia-legacy470-kernel.SlackBuild
+```
+or
+```
+KERNEL615=yes nvidia-legacy470-kernel.SlackBuild
+```
+if You have linux-6.14 or linux-6.15 kernel respectively, then additional patches will be applied.
+
 
 Please try this, remarks and bug complaints (if any) are welcome!
