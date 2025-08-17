@@ -59,11 +59,11 @@ NVidia installer for 470 is too large (approx. 250 Mb) to store it here, but `ge
 
 You have to run the kernel package build script as
 ```
-KERNEL614=yes nvidia-legacy470-kernel.SlackBuild
+KERNEL614=yes ./nvidia-legacy470-kernel.SlackBuild
 ```
 or
 ```
-KERNEL615=yes nvidia-legacy470-kernel.SlackBuild
+KERNEL615=yes ./nvidia-legacy470-kernel.SlackBuild
 ```
 if You have linux-6.14 or linux-6.15 kernel respectively, then additional patches will be applied.
 
