@@ -28,7 +28,7 @@ There is a warning about "tainted kernel" in `dmesg` output.
 
 After a framebuffer for the second (integrated) intel card starts to initialize, the text console gets black for a long (ca 30 seconds) and returns only before X is started.
 
-Maybe the pause is long because something goes wrong with networking. When Xserver is started, `nvidia-drm` complains about failure to grab drm device ownership, which is a long-term issue for NVidia:
+Probably the pause is long because of entropy starvation when r8169 is started and is not related to graphics. When Xserver is started, `nvidia-drm` complains about failure to grab drm device ownership, which is a long-term issue for NVidia:
 ```
 [   22.205067] RPL Segment Routing with IPv6
 [   22.205090] In-situ OAM (IOAM) with IPv6
