@@ -8,7 +8,7 @@
 +#if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 20, 0)
 +    // Rel. commit "sysfb: Replace screen_info with sysfb_primary_display" (Thomas Zimmermann, 26 Nov 2025)
 +    static const struct screen_info *si = &sysfb_primary_display.screen;
-+#elif defined (NV_SCREEN_INFO_H_PRESENT)
++#elif defined (NV_LINUX_SCREEN_INFO_H_PRESENT)
 +    static const struct screen_info *si = &screen_info;
 +#endif
 +#endif
@@ -60,7 +60,7 @@
 +#if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 20, 0)
 +    // Rel. commit "sysfb: Replace screen_info with sysfb_primary_display" (Thomas Zimmermann, 26 Nov 2025)
 +    static const struct screen_info *si = &sysfb_primary_display.screen;
-+#elif defined (NV_SCREEN_INFO_H_PRESENT)
++#elif defined (NV_LINUX_SCREEN_INFO_H_PRESENT)
 +    static struct screen_info *si = &screen_info;
 +#endif
 +#endif
